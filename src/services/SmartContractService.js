@@ -21,24 +21,24 @@ const getTokenInfo = async () => {
 
         // Récupérer le nom du jeton
         const name = await contract.name();
-        console.log(`Nom du jeton: ${name}`);
+        // console.log(`Nom du jeton: ${name}`);
 
         // Récupérer le symbole du jeton
         const symbol = await contract.symbol();
-        console.log(`Symbole du jeton: ${symbol}`);
+        // console.log(`Symbole du jeton: ${symbol}`);
 
         // Récupérer le nombre de décimales du jeton
         const decimals = await contract.decimals();
-        console.log(`Décimales du jeton: ${decimals}`);
+        // console.log(`Décimales du jeton: ${decimals}`);
 
         // Récupérer le solde de l'adresse spécifiée
         const balance = await contract.balanceOf(address);
-        console.log(`Solde : ${balance}`);
+        // console.log(`Solde : ${balance}`);
 
         const adjustedBalance = ethers.formatUnits(balance, decimals);
         console.log(`Le solde de l'adresse ${address} est: ${adjustedBalance} ${symbol}`);
 
-        const info = {
+        let info = {
             name,
             symbol,
             decimals,
