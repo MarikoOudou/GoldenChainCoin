@@ -1,0 +1,22 @@
+{
+    "profil": {
+        "username": "Mariko Oudou",
+        "type_user": "owner",
+        "identifiant": ""
+    },
+    "wallet": {
+        "name": "",
+        "balance": 1234567,
+        "symbole": "GCC",
+        "solde": 100000
+    },
+    "historique": [
+        {
+            "type": "buy_gcc",
+            "price": 10000,
+            "symbol": "GCC",
+            "description": "",
+            "name": "Achat GCC"
+        }
+    ]
+}

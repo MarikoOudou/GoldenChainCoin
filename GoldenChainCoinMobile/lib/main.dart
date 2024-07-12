@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:goldenchaincoin/home/home_page.dart';
+import 'package:goldenchaincoin/pages/home/home_page.dart';
+import 'package:goldenchaincoin/routes/AppRoute.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
 
@@ -11,6 +13,8 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(const MyApp()));
 }
+
+final AppRouter _appRouter = AppRouter();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,11 +28,13 @@ class MyApp extends StatelessWidget {
       
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        scaffoldBackgroundColor: Colors.black12,
+        scaffoldBackgroundColor: Color.fromARGB(247, 238, 238, 238),
+        fontFamily: GoogleFonts.lato().fontFamily,
         // primaryColorLight: Colors.white,
         useMaterial3: true,
       ),
-      home:  HomePage(),
+      // home:  HomePage(),
+      onGenerateRoute: _appRouter.generateRoute,
     );
   }
 }

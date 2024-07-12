@@ -42,6 +42,20 @@ app.post('/info', (req, res) => {
   res.status(201).json(reponse);
 });
 
+app.post('/register', (req, res) => {
+  let data = req.body;
+  let reponse = {};
+
+  res.status(201).json(reponse);
+});
+
+app.post('/login', (req, res) => {
+  let data = req.body;
+  let reponse = {};
+
+  res.status(201).json(reponse);
+});
+
 app.post('/transfert', (req, res) => {
   let data = req.body;
   let reponse = {};
