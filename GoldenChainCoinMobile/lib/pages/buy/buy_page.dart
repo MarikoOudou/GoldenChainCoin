@@ -11,14 +11,19 @@ class BuyPage extends StatefulWidget {
 
 class _BuyPageState extends State<BuyPage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController amount_GCC = TextEditingController(text: "000.000.0");
-  TextEditingController amount_CFA = TextEditingController(text: "123456789");
+  TextEditingController amount_GCC = TextEditingController(text: "00");
+  TextEditingController amount_CFA = TextEditingController(text: "00");
   List<dynamic> list = <dynamic>[
     {"title": "VISA", "icon": "assets/icons/visa.png", "id": "visa"},
     {"title": "MTN", "icon": "assets/icons/mtn.png", "id": "mtn"},
     {"title": "BITCOIN", "icon": "assets/icons/bitcoin.jpg", "id": "bitcoin"},
-    ];
+  ];
   dynamic dropdownValue;
+
+  List<TextEditingController> visaTextField = List.generate(4, (i) => TextEditingController());
+  List<TextEditingController> mtnTextField = List.generate(2, (i) => TextEditingController());
+  List<TextEditingController> bitcoinTextField = List.generate(2, (i) => TextEditingController());
+  final double prixMarcher = 46273;
 
   @override
   void initState() {
@@ -30,193 +35,295 @@ class _BuyPageState extends State<BuyPage> {
   @override
   Widget build(BuildContext context) {
     // dropdownValue = list.first;
+    double heigth = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: const Size(0, 0),
+          preferredSize: Size.zero,
           child: AppBar(
             backgroundColor: const Color(0xeeeeeeee),
           )),
       body: SafeArea(
           child: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(12),
               width: double.infinity,
+              // height: heigth,
               decoration: const BoxDecoration(color: Color(0xeeeeeeee)),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   headPageBuy(context),
                   const SizedBox(
-                    height: 20,
+                    height: 18,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color:
-                                      const Color.fromARGB(237, 245, 241, 241),
-                                ),
-                                child: const ListTile(
-                                  title: Text(
-                                    "Golden Chain Coin",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                  subtitle: Row(
-                                    children: [
-                                      Text(
-                                        "46.273 CFA => ",
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      Text(
-                                        "1 GCC",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  trailing: Icon(
-                                    Icons.currency_exchange_rounded,
-                                    size: 40,
-                                    color: Color.fromARGB(255, 237, 160, 7),
-                                  ),
-                                )),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(28.0),
-                              child: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    children: [
-                                      inputForm(
-                                          controller: amount_GCC,
-                                          obscureText: false,
-                                          prefixText: "GCC ",
-                                          keyboardType:
-                                              TextInputType.numberWithOptions(
-                                                  decimal: true),
-                                          style: const TextStyle(
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.bold),
-                                          prefixStyle: const TextStyle(
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.bold),
-                                          // prefixIcon: const Text("CFA", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                                          validatorMethod: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please enter some text';
-                                            }
-                                            return null;
-                                          }),
-                                      // inputForm(
-                                      //     controller: amount_CFA,
-                                      //     suffixText: "CFA",
-                                      //     readOnly: true,
-                                      //     textDirection: TextDirection.rtl,
-                                      //     suffixStyle: const TextStyle(
-                                      //       fontSize: 18,
-                                      //       fontWeight: FontWeight.bold),
-                                      //     obscureText: false,
-                                      //     validatorMethod: (value) {
-                                      //       if (value == null ||
-                                      //           value.isEmpty) {
-                                      //         return 'Please enter some text';
-                                      //       }
-                                      //       return null;
-                                      //     }),
-                                    ],
-                                  )),
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                          padding: const EdgeInsets.all(10),
-                          width: double.infinity,
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                          ),
-                          child: Column(
+                  Expanded(
+                    child: SizedBox(
+                      height: heigth,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.all(6),
-                                alignment: Alignment.topLeft,
-                                child: Text("Choisissez le moyen de paiement"),
-                              ),
-                              const SizedBox(height: 10,),
-                              Container(
-                                  padding: EdgeInsets.all(0),
-                                  width: double.infinity,
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<dynamic>(
-                                      value: dropdownValue,
-                                      icon: const Icon(Icons.check),
-                                      elevation: 16,
-                                      style: const TextStyle(color: Colors.black),
-                                      // underline: Container(
-                                      //   height: 2,
-                                      //   color: Colors.deepPurpleAccent,
-                                      // ),
-                                      onChanged: (dynamic? value) {
-                                        // This is called when the user selects an item.
-                                        setState(() {
-                                          dropdownValue = value!;
-                                        });
-                                      },
-                                      items: list.map<DropdownMenuItem<dynamic>>((dynamic value) {
-                                        return DropdownMenuItem<dynamic>(
-                                          value: value,
-                                          child:  Row(
+                                padding: const EdgeInsets.all(10),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.white,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: const Color.fromARGB(
+                                              237, 245, 241, 241),
+                                        ),
+                                        child: ListTile(
+                                          title: const Text(
+                                            "Golden Chain Coin",
+                                            style:  TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                          ),
+                                          subtitle: Row(
                                             children: [
-                                              Image.asset(value["icon"], width: 80,),
-                                              SizedBox(width: 10,),
-                                              Text(value["title"]),
+                                              Text(
+                                                "$prixMarcher => ",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              const Text(
+                                                "1 GCC",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ],
                                           ),
-                                        );
-                                      }).toList(),
+                                          trailing: const Icon(
+                                            Icons.currency_exchange_rounded,
+                                            size: 40,
+                                            color: Color.fromARGB(
+                                                255, 237, 160, 7),
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      height: 10,
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(28.0),
+                                      child: Form(
+                                          key: _formKey,
+                                          child: Column(
+                                            children: [
+                                              inputForm(
+                                                  controller: amount_GCC,
+                                                  obscureText: false,
+                                                  prefixText: "GCC ",
+                                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                                  style: const TextStyle(
+                                                      fontSize: 32,
+                                                      fontWeight: FontWeight.bold),
+                                                  prefixStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                                                  // prefixIcon: const Text("CFA", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                                  validatorMethod: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Please enter some text';
+                                                    }
+                                                    return null;
+                                                  },
+
+                                                  onChanged:(p0) {
+                                                    setState(() {
+                                                    amount_CFA.text = (double.parse(p0.isEmpty?"0":p0)* prixMarcher).toString();
+                                                    });
+                                                  },
+                                                  
+                                                  ),
+                                              inputForm(
+                                                  controller: amount_CFA,
+                                                  suffixText: "CFA",
+                                                  readOnly: true,
+                                                  enable: false,
+                                                  textDirection: TextDirection.rtl,
+                                                  suffixStyle: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold),
+                                                  obscureText: false,
+                                                  
+                                                  validatorMethod: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Please enter some text';
+                                                    }
+                                                    return null;
+                                                  }),
+                                            ],
+                                          )),
+                                    )
+                                  ],
                                 ),
-                              
+                              ),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              Container(
+                                  padding: const EdgeInsets.all(10),
+                                  width: double.infinity,
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(6),
+                                        alignment: Alignment.topLeft,
+                                        child: const Text("Choisissez le moyen de paiement"),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(0),
+                                        width: double.infinity,
+                                        alignment: Alignment.topLeft,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            DropdownButtonHideUnderline(
+                                              child: DropdownButton<dynamic>(
+                                                value: dropdownValue,
+                                                icon: const Icon(Icons.check),
+                                                elevation: 16,
+                                                isExpanded: true,
+                                                style: const TextStyle(
+                                                    color: Colors.black),
+                                                onChanged: (dynamic? value) {
+                                                  // This is called when the user selects an item.
+                                                  setState(() {
+                                                    dropdownValue = value!;
+                                                  });
+                                                },
+                                                items: list.map<DropdownMenuItem<dynamic>>((dynamic value) {
+                                                  return DropdownMenuItem<
+                                                      dynamic>(
+                                                    value: value,
+                                                    child: Row(
+                                                      children: [
+                                                        Image.asset(
+                                                          value["icon"],
+                                                          width: 80,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(value["title"]),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            dropdownValue["id"] == "visa" ? visaTextFieldForm(width):
+                                            dropdownValue["id"] == "mtn" ? mtnTextFieldForm():
+                                            dropdownValue["id"] == "bitcoin" ? bitcoinTextFieldForm() : Container()
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )),
                             ],
-                          )),
-                      const SizedBox(
-                        height: 30,
+                          ),
+                          buttonSubmit(
+                              context: context,
+                              onPressed: () => showModal(context: context))
+                        ],
                       ),
-                      buttonSubmit(
-                          context: context,
-                          onPressed: () => showModal(context: context))
-                    ],
+                    ),
                   ),
                 ],
               ))),
+    );
+  }
+
+  Container bitcoinTextFieldForm() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          inputForm(
+            labelText: "Adresse Bitcoin",
+             prefixIcon: const Icon(Icons.wallet),
+            controller: bitcoinTextField[0], obscureText: false, validatorMethod: (value){})
+        ],
+      )
+      
+    );
+  }
+
+  Container mtnTextFieldForm() {
+    return Container(padding: const EdgeInsets.all(10),
+    child: inputForm(
+            labelText: "Numéro de téléphone",
+             prefixIcon: const Icon(Icons.phone),
+            controller: bitcoinTextField[0], obscureText: false, validatorMethod: (value){}),);
+  }
+
+  Container visaTextFieldForm(double width) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      child: Column(
+        children: [
+          inputForm(
+            labelText: "Numéro de carte",
+            prefixIcon: const Icon(Icons.numbers_outlined),
+            controller: visaTextField[0], obscureText: false, validatorMethod: (value){}),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+                children: [
+                  SizedBox(
+                  width: width * 0.45, 
+                  child:  inputForm(
+                  maxLength: 30,
+                  labelText: "Validité",
+                  prefixIcon: const Icon(Icons.numbers_outlined),
+                  controller: visaTextField[1], obscureText: false, validatorMethod: (value){}),),
+
+                  SizedBox(width: width * 0.35,
+                  child:  inputForm(
+                  labelText: "CVV",
+                  prefixIcon: const Icon(Icons.numbers_outlined),
+                  controller: visaTextField[2], obscureText: false, validatorMethod: (value){}),),
+                ],
+              ),
+            inputForm(
+            labelText: "Titulaire de la carte",
+            maxLength: 16,
+            prefixIcon: const Icon(Icons.numbers_outlined),
+            controller: visaTextField[3], obscureText: false, validatorMethod: (value){}),
+          
+        ],
+      ),
     );
   }
 
@@ -267,11 +374,15 @@ class _BuyPageState extends State<BuyPage> {
       TextStyle? prefixStyle,
       TextStyle? suffixStyle,
       TextStyle? style,
+      int? maxLength = 9,
       bool readOnly = false,
       TextDirection? textDirection,
       required TextEditingController controller,
       required bool obscureText,
-      required String? Function(String?) validatorMethod}) {
+      bool? enable,
+      required String? Function(String?) validatorMethod,
+      void Function(String)? onChanged
+      }) {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
@@ -279,7 +390,8 @@ class _BuyPageState extends State<BuyPage> {
       readOnly: readOnly,
       style: style,
       autofocus: true,
-      maxLength: 9,
+      enabled: enable,
+      maxLength: maxLength,
       enableSuggestions: false,
       maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,
       showCursor: true,
@@ -321,6 +433,7 @@ class _BuyPageState extends State<BuyPage> {
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon),
       validator: validatorMethod,
+      onChanged: onChanged,
     );
   }
 
@@ -332,7 +445,9 @@ class _BuyPageState extends State<BuyPage> {
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 237, 160, 7),),
+            backgroundColor: MaterialStateProperty.all(
+              Color.fromARGB(255, 237, 160, 7),
+            ),
             // textStyle: MaterialStateProperty.all(const TextStyle(
             //     fontSize: 20,
             //     color: Color.fromARGB(255, 0, 0, 0),
