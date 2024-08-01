@@ -2,4 +2,4 @@ TOKEN CONTRACT (WITH 18 DECIMALS):
 Adresse du contrat :0x3a4A5C65037e94Dff3400c71C86A34AA7C40Aa52
 
 # PAGE LOGIN
-![](viewLogin.png | width=100)
+![Alt text](viewLogin.png|width=100)
