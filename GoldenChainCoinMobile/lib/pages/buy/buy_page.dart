@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldenchaincoin/pages/buy/logic/cubit/buy_cubit.dart';
 import 'package:goldenchaincoin/pages/home/home_page.dart';
 
 class BuyPage extends StatefulWidget {
@@ -20,9 +22,12 @@ class _BuyPageState extends State<BuyPage> {
   ];
   dynamic dropdownValue;
 
-  List<TextEditingController> visaTextField = List.generate(4, (i) => TextEditingController());
-  List<TextEditingController> mtnTextField = List.generate(2, (i) => TextEditingController());
-  List<TextEditingController> bitcoinTextField = List.generate(2, (i) => TextEditingController());
+  List<TextEditingController> visaTextField =
+      List.generate(4, (i) => TextEditingController());
+  List<TextEditingController> mtnTextField =
+      List.generate(2, (i) => TextEditingController());
+  List<TextEditingController> bitcoinTextField =
+      List.generate(2, (i) => TextEditingController());
   final double prixMarcher = 46273;
 
   @override
@@ -88,7 +93,7 @@ class _BuyPageState extends State<BuyPage> {
                                         child: ListTile(
                                           title: const Text(
                                             "Golden Chain Coin",
-                                            style:  TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18),
                                           ),
@@ -125,41 +130,53 @@ class _BuyPageState extends State<BuyPage> {
                                           child: Column(
                                             children: [
                                               inputForm(
-                                                  controller: amount_GCC,
-                                                  obscureText: false,
-                                                  prefixText: "GCC ",
-                                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                                  style: const TextStyle(
-                                                      fontSize: 32,
-                                                      fontWeight: FontWeight.bold),
-                                                  prefixStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                                                  // prefixIcon: const Text("CFA", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                                                  validatorMethod: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Please enter some text';
-                                                    }
-                                                    return null;
-                                                  },
+                                                controller: amount_GCC,
+                                                obscureText: false,
+                                                prefixText: "GCC ",
+                                                keyboardType:
+                                                    const TextInputType
+                                                        .numberWithOptions(
+                                                        decimal: true),
+                                                style: const TextStyle(
+                                                    fontSize: 32,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                prefixStyle: const TextStyle(
+                                                    fontSize: 32,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                // prefixIcon: const Text("CFA", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                                validatorMethod: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Please enter some text';
+                                                  }
+                                                  return null;
+                                                },
 
-                                                  onChanged:(p0) {
-                                                    setState(() {
-                                                    amount_CFA.text = (double.parse(p0.isEmpty?"0":p0)* prixMarcher).toString();
-                                                    });
-                                                  },
-                                                  
-                                                  ),
+                                                onChanged: (p0) {
+                                                  setState(() {
+                                                    amount_CFA.text =
+                                                        (double.parse(p0.isEmpty
+                                                                    ? "0"
+                                                                    : p0) *
+                                                                prixMarcher)
+                                                            .toString();
+                                                  });
+                                                },
+                                              ),
                                               inputForm(
                                                   controller: amount_CFA,
                                                   suffixText: "CFA",
                                                   readOnly: true,
                                                   enable: false,
-                                                  textDirection: TextDirection.rtl,
+                                                  textDirection:
+                                                      TextDirection.rtl,
                                                   suffixStyle: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                   obscureText: false,
-                                                  
                                                   validatorMethod: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
@@ -193,7 +210,8 @@ class _BuyPageState extends State<BuyPage> {
                                       Container(
                                         padding: const EdgeInsets.all(6),
                                         alignment: Alignment.topLeft,
-                                        child: const Text("Choisissez le moyen de paiement"),
+                                        child: const Text(
+                                            "Choisissez le moyen de paiement"),
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -203,7 +221,8 @@ class _BuyPageState extends State<BuyPage> {
                                         width: double.infinity,
                                         alignment: Alignment.topLeft,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             DropdownButtonHideUnderline(
                                               child: DropdownButton<dynamic>(
@@ -219,7 +238,10 @@ class _BuyPageState extends State<BuyPage> {
                                                     dropdownValue = value!;
                                                   });
                                                 },
-                                                items: list.map<DropdownMenuItem<dynamic>>((dynamic value) {
+                                                items: list.map<
+                                                        DropdownMenuItem<
+                                                            dynamic>>(
+                                                    (dynamic value) {
                                                   return DropdownMenuItem<
                                                       dynamic>(
                                                     value: value,
@@ -242,9 +264,14 @@ class _BuyPageState extends State<BuyPage> {
                                             const SizedBox(
                                               height: 5,
                                             ),
-                                            dropdownValue["id"] == "visa" ? visaTextFieldForm(width):
-                                            dropdownValue["id"] == "mtn" ? mtnTextFieldForm():
-                                            dropdownValue["id"] == "bitcoin" ? bitcoinTextFieldForm() : Container()
+                                            dropdownValue["id"] == "visa"
+                                                ? visaTextFieldForm(width)
+                                                : dropdownValue["id"] == "mtn"
+                                                    ? mtnTextFieldForm()
+                                                    : dropdownValue["id"] ==
+                                                            "bitcoin"
+                                                        ? bitcoinTextFieldForm()
+                                                        : Container()
                                           ],
                                         ),
                                       ),
@@ -266,25 +293,29 @@ class _BuyPageState extends State<BuyPage> {
 
   Container bitcoinTextFieldForm() {
     return Container(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          inputForm(
-            labelText: "Adresse Bitcoin",
-             prefixIcon: const Icon(Icons.wallet),
-            controller: bitcoinTextField[0], obscureText: false, validatorMethod: (value){})
-        ],
-      )
-      
-    );
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            inputForm(
+                labelText: "Adresse Bitcoin",
+                prefixIcon: const Icon(Icons.wallet),
+                controller: bitcoinTextField[0],
+                obscureText: false,
+                validatorMethod: (value) {})
+          ],
+        ));
   }
 
   Container mtnTextFieldForm() {
-    return Container(padding: const EdgeInsets.all(10),
-    child: inputForm(
-            labelText: "Numéro de téléphone",
-             prefixIcon: const Icon(Icons.phone),
-            controller: bitcoinTextField[0], obscureText: false, validatorMethod: (value){}),);
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: inputForm(
+          labelText: "Numéro de téléphone",
+          prefixIcon: const Icon(Icons.phone),
+          controller: bitcoinTextField[0],
+          obscureText: false,
+          validatorMethod: (value) {}),
+    );
   }
 
   Container visaTextFieldForm(double width) {
@@ -294,34 +325,43 @@ class _BuyPageState extends State<BuyPage> {
       child: Column(
         children: [
           inputForm(
-            labelText: "Numéro de carte",
-            prefixIcon: const Icon(Icons.numbers_outlined),
-            controller: visaTextField[0], obscureText: false, validatorMethod: (value){}),
-             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(
-                  width: width * 0.45, 
-                  child:  inputForm(
-                  maxLength: 30,
-                  labelText: "Validité",
-                  prefixIcon: const Icon(Icons.numbers_outlined),
-                  controller: visaTextField[1], obscureText: false, validatorMethod: (value){}),),
-
-                  SizedBox(width: width * 0.35,
-                  child:  inputForm(
-                  labelText: "CVV",
-                  prefixIcon: const Icon(Icons.numbers_outlined),
-                  controller: visaTextField[2], obscureText: false, validatorMethod: (value){}),),
-                ],
+              labelText: "Numéro de carte",
+              prefixIcon: const Icon(Icons.numbers_outlined),
+              controller: visaTextField[0],
+              obscureText: false,
+              validatorMethod: (value) {}),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: width * 0.45,
+                child: inputForm(
+                    maxLength: 30,
+                    labelText: "Validité",
+                    prefixIcon: const Icon(Icons.numbers_outlined),
+                    controller: visaTextField[1],
+                    obscureText: false,
+                    validatorMethod: (value) {}),
               ),
-            inputForm(
-            labelText: "Titulaire de la carte",
-            maxLength: 16,
-            prefixIcon: const Icon(Icons.numbers_outlined),
-            controller: visaTextField[3], obscureText: false, validatorMethod: (value){}),
-          
+              SizedBox(
+                width: width * 0.35,
+                child: inputForm(
+                    labelText: "CVV",
+                    prefixIcon: const Icon(Icons.numbers_outlined),
+                    controller: visaTextField[2],
+                    obscureText: false,
+                    validatorMethod: (value) {}),
+              ),
+            ],
+          ),
+          inputForm(
+              labelText: "Titulaire de la carte",
+              maxLength: 16,
+              prefixIcon: const Icon(Icons.numbers_outlined),
+              controller: visaTextField[3],
+              obscureText: false,
+              validatorMethod: (value) {}),
         ],
       ),
     );
@@ -381,8 +421,7 @@ class _BuyPageState extends State<BuyPage> {
       required bool obscureText,
       bool? enable,
       required String? Function(String?) validatorMethod,
-      void Function(String)? onChanged
-      }) {
+      void Function(String)? onChanged}) {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
@@ -448,10 +487,6 @@ class _BuyPageState extends State<BuyPage> {
             backgroundColor: MaterialStateProperty.all(
               Color.fromARGB(255, 237, 160, 7),
             ),
-            // textStyle: MaterialStateProperty.all(const TextStyle(
-            //     fontSize: 20,
-            //     color: Color.fromARGB(255, 0, 0, 0),
-            //     fontWeight: FontWeight.bold)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
@@ -467,32 +502,144 @@ class _BuyPageState extends State<BuyPage> {
   }
 
   showModal({required BuildContext context}) {
+    double showModalHeight = 280;
     return showModalBottomSheet<void>(
       context: context,
       isDismissible: true,
       builder: (BuildContext context) {
         return Container(
-          height: 380,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 237, 160, 7),
+          height: showModalHeight,
+          decoration: const BoxDecoration(
+            color: Color(0xeeeeeeee),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           ),
-          child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(40),
+            width: double.infinity,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text('Modal BottomSheet'),
-                ElevatedButton(
-                  child: const Text('Close BottomSheet'),
-                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                      context, HomePage.routeName, ModalRoute.withName('/')),
+                SizedBox(
+                  height: showModalHeight * 0.5,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Souhaitez-vous confirmer le paiement ?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Frais de l'operateur"),
+                              Text("100.000 FCFA")
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [Text("Total "), Text("100.000 FCFA")],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: showModalHeight * 0.1,
+                  width: double.infinity,
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                    child: const Text('Je confirme!'),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      openBox();
+                    },
+                  ),
                 ),
               ],
             ),
           ),
         );
+      },
+    );
+  }
+
+  final Future<String> _calculation = Future<String>.delayed(
+    const Duration(seconds: 4),
+    () => 'Data Loaded',
+  );
+
+  openBox() async {
+    // ignore: use_build_context_synchronously
+    bool barrierDismissible = false;
+    showDialog(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (BuildContext context) {
+        return Container(
+            padding: const EdgeInsets.all(0),
+            child: Dialog(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Container(
+                    alignment: Alignment.center,
+                    height: 320,
+                    padding: const EdgeInsets.all(15),
+                    child: FutureBuilder(
+                        future: _calculation,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.hasData) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/succes.webp",
+                                    width: 100,
+                                  ),
+                                  const Text(
+                                    "Paiement effectuer avec succes!",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.normal,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  ElevatedButton(
+                                      child: const Text('OK'),
+                                      onPressed: () =>
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              HomePage.routeName,
+                                              ModalRoute.withName('/'))),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        }))));
       },
     );
   }

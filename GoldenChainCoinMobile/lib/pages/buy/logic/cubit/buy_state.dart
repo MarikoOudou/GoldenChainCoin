@@ -22,6 +22,11 @@ class LoadedState extends BuyState {
 
 }
 
+class Loaded extends BuyState {
+  @override
+  List<Object> get props => [];
+}
+
 class ErrorState extends BuyState {
   @override
   List<Object> get props => [];
